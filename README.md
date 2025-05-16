@@ -2,6 +2,7 @@
 流程：通过Low-level discovery,批量监控站点的ssl证书过期时间，站点可以指定域名，特定端口，指定hots
 
 1.参考：
+
 官方模版名称：Website certificate by Zabbix agent 2
 https://www.zabbix.com/integrations/ssl
 https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/app/certificate_agent2?at=release/7.2
