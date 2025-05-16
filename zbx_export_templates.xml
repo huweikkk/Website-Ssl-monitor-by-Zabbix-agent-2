@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.2</version>
+    <template_groups>
+        <template_group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
+            <name>Templates</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>470291f616d84e67a03a8a060ae37a8d</uuid>
+            <template>Website Ssl monitor by Zabbix agent 2</template>
+            <name>Website Ssl monitor by Zabbix agent 2</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>d6fd91d3058a46d6a4e10cc9198cf29d</uuid>
+                    <name>ssl check status {#CERT.WEBSITE.HOSTNAME}</name>
+                    <key>ssl.discovery</key>
+                    <delay>3m</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>4378c80cccc94b18ad776eb680e40280</uuid>
+                            <name>{#CERT.WEBSITE.HOSTNAME} SSL certificate check  {#CERT.WEBSITE.IP}</name>
+                            <key>web.certificate.get[{#CERT.WEBSITE.HOSTNAME},{#CERT.WEBSITE.PORT},{#CERT.WEBSITE.IP}]</key>
+                            <delay>15m</delay>
+                            <history>2h</history>
+                            <trends>0</trends>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.x509.not_after.timestamp</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>ssh check</tag>
+                                    <value>ssl</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>ec412065f7e54e24b1c3bbb97d1774c6</uuid>
+                                    <expression>(last(/Website Ssl monitor by Zabbix agent 2/web.certificate.get[{#CERT.WEBSITE.HOSTNAME},{#CERT.WEBSITE.PORT},{#CERT.WEBSITE.IP}]) - now()) / 86400 &lt; {$SSL.EXPIRY}</expression>
+                                    <name>SSL certificate expires on  {#CERT.WEBSITE.HOSTNAME}</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>d901a5cc85fb456f99d5afb418b19f95</uuid>
+                            <name>{#CERT.WEBSITE.HOSTNAME} Certificate expiration date</name>
+                            <key>web.certificate.get[{#CERT.WEBSITE.HOSTNAME},{#CERT.WEBSITE.PORT}]</key>
+                            <delay>15m</delay>
+                            <history>1d</history>
+                            <trends>0</trends>
+                            <units>unixtime</units>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.x509.not_after.timestamp</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>ssh check</tag>
+                                    <value>certificate expiration time</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <tags>
+                <tag>
+                    <tag>class</tag>
+                    <value>software</value>
+                </tag>
+                <tag>
+                    <tag>target</tag>
+                    <value>certificate</value>
+                </tag>
+            </tags>
+            <macros>
+                <macro>
+                    <macro>{$SSL.EXPIRY}</macro>
+                    <value>7</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
