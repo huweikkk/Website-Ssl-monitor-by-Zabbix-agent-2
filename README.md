@@ -35,9 +35,11 @@ web.certificate.get[{$CERT.WEBSITE.HOSTNAME},{$CERT.WEBSITE.PORT},{$CERT.WEBSITE
 格式化数据:
 
 [root@gz7-zabbixserver etc]# /usr/local/zabbix/bin/zabbix_get -s 127.0.0.1 -k web.certificate.get[www.baidu.com,443,183.2.172.177]|jq '.x509.not_after.value'
+
 "Aug 09 01:41:01 2025 GMT"
 
 [root@gz7-zabbixserver etc]# /usr/local/zabbix/bin/zabbix_get -s 127.0.0.1 -k web.certificate.get[www.baidu.com,443,183.2.172.177]|jq '.x509.not_after.timestamp'
+
 1754703661
 
 4.使用流程
