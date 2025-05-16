@@ -5,8 +5,8 @@
 https://www.zabbix.com/integrations/ssl
 https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/app/certificate_agent2?at=release/7.2
 
-2.需求
-zabbix 支持 Zabbix agent 2
+2.需求:
+zabbix 支持 Zabbix agent 2 .
 Zabbix version: 7.2 and higher.
 
 3.说明
